@@ -1,0 +1,22 @@
+{
+  "name": "chatify-realtimechatapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install -prefix Backend && npm install -prefix Frontend && npm run build --prefix Frontend",
+    "start": "npm run start --prefix Backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rudy-123/Chatify-RealtimeChatApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Rudy-123/Chatify-RealtimeChatApp/issues"
+  },
+  "homepage": "https://github.com/Rudy-123/Chatify-RealtimeChatApp#readme"
+}
