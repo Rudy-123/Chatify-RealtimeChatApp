@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { ENV } from "./env.js";
 export const generateToken = (userId, res) => {
   const { JWT_SECRET } = process.env;
   if (!JWT_SECRET) {
@@ -12,7 +13,7 @@ export const generateToken = (userId, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000, //7 days in milliseconds
     httpOnly: true, //Prevent XSS Attacks:Cross Site Scripting
     sameSite: "strict", //CSRF Attacks
-    secure: process.env.NODE_ENV === "development" ? false : true,
+    secure: ENV.NODE_ENV === "development" ? false : true,
   });
   return token;
 };
