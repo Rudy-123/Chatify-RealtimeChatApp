@@ -1,10 +1,19 @@
 import express from "express";
-import { signup, login, logout } from "../Controllers/auth.controller.js";
+import {
+  signup,
+  login,
+  logout,
+  updateProfile,
+} from "../Controllers/auth.controller.js";
+import { protectRoute } from "../Middleware/auth.middleware.js";
 
 const router = express.Router();
-
+//POST because we have to create profile on the server and for updating an existing id put request
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
-
+router.put("/updateProfile", protectRoute, updateProfile); //if user is authenticated then only next function for updating user's profile
+router.get("/check", protectRoute, (req, res) =>
+  res.status(200).json(req.user),
+);
 export default router;
