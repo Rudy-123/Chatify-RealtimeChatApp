@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { Resend } from "resend";
+import { ENV } from "./env.js";
 
 import { Resend } from "resend";
 console.log("NAME:", process.env.EMAIL_FROM_NAME);
