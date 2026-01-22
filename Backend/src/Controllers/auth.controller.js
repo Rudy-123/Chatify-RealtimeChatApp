@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { ENV } from "../lib/env.js";
 import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmail } from "../Emails/emailHandlers.js";
+import cloudinary from "../lib/cloudinary.js";
 export const signup = async (req, res) => {
   const { fullname, email, password } = req.body;
   try {
@@ -67,25 +68,45 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(400).json({ message: "Invalid Credentials" });
+      return res.status(400).json({ message: "Invalid Credentials" });
     }
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      res.status(400).json({ message: "Invalid Credentials" });
+      return res.status(400).json({ message: "Invalid Credentials" });
     }
     generateToken(user._id, res);
-    res.status(200).json({
-      _id: user.id,
+    return res.status(200).json({
+      _id: user._id,
       fullname: user.fullname,
       email: user.email,
       profilePic: user.profilePic,
     });
   } catch (error) {
     console.error("Error in login controller: ", error);
-    res.status(500).json({ messgae: "Internal Server Error" });
+    return res.status(500).json({ messgae: "Internal Server Error" });
   }
 };
+
 export const logout = async (_, res) => {
   res.cookie("jwt", "", { maxAge: 0 });
   res.status(200).json({ message: "Logged Out Successfully" });
+};
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePic } = req.body;
+    if (!profilePic)
+      res.status(400).json({ message: "Profile Pic is required" });
+    const userId = req.user._id;
+    const uploadResponse = await cloudinary.uploader(profilePic);
+    //now update the pic in db
+    const updatedUser = await User.findById(
+      userId,
+      { profilePic: uploadResponse.secure_url },
+      { new: true },
+    );
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log("Error in update profile", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };

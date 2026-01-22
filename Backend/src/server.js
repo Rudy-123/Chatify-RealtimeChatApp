@@ -4,6 +4,7 @@ import messageRoutes from "./Routes/message.route.js";
 import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -11,6 +12,7 @@ const __dirname = path.resolve();
 const PORT = ENV.PORT || 3000;
 
 app.use(express.json()); //Middleware to get all the response that is made from the frontend under the signup route with all conditions
+app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
