@@ -9,7 +9,7 @@ import { protectRoute } from "../Middleware/auth.middleware.js";
 import { arcjetProtection } from "../Middleware/arcjet.middleware.js";
 
 const router = express.Router();
-router.use(arcjetProtection); //if this passes the req mins per test(rate) and does not get limited then only eveything else can be done
+//router.use(arcjetProtection); //if this passes the req mins per test(rate) and does not get limited then only eveything else can be done
 //POST because we have to create profile on the server and for updating an existing id put request
 router.post("/signup", signup);
 router.post("/login", login);
