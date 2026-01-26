@@ -4,6 +4,7 @@ import {
   login,
   logout,
   updateProfile,
+  checkAuth,
 } from "../Controllers/auth.controller.js";
 import { protectRoute } from "../Middleware/auth.middleware.js";
 import { arcjetProtection } from "../Middleware/arcjet.middleware.js";

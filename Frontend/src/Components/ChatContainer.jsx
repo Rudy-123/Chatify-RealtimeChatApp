@@ -1,5 +1,4 @@
 function ChatContainer() {
-  return <div></div>;
+  return <div>ChatContainer</div>;
 }
-
 export default ChatContainer;
