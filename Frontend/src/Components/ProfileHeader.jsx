@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { LogOutIcon, VolumeOffIcon, Volume2Icon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
@@ -11,7 +11,18 @@ function ProfileHeader() {
   const [selectedImg, setSelectedImg] = useState(null);
 
   const fileInputRef = useRef(null);
-  const handleImaheUpload = (e) => {};
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const base64Image = reader.result;
+      setSelectedImg(base64Image);
+      await updateProfile({ profilePic: base64Image });
+    };
+  };
 
   return (
     <div className="p-6 border-b border-slate-700/50">
@@ -36,7 +47,7 @@ function ProfileHeader() {
               type="file"
               accept="image/*"
               ref={fileInputRef}
-              onChange={handleImaheUpload}
+              onChange={handleImageUpload}
               className="hidden"
             />
           </div>

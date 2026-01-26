@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
-router.put("/updateProfile", protectRoute, arcjetProtection, updateProfile); //if user is authenticated then only next function for updating user's profile
+router.put("/update-profile", protectRoute, arcjetProtection, updateProfile); //if user is authenticated then only next function for updating user's profile
 router.get("/check", protectRoute, (req, res) =>
   res.status(200).json(req.user),
 );
