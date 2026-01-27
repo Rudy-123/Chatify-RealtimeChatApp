@@ -10,23 +10,20 @@ function ChatContainer() {
   const { selectedUser, getMessagesByUserId, messages, isMessagesLoading } =
     useChatStore();
   const { authUser } = useAuthStore();
-  const messageEndRef = useRef(null);
 
-  // Fetch messages when user changes
+  const messageEndRef = useRef(null);
   useEffect(() => {
     if (selectedUser?._id) {
       getMessagesByUserId(selectedUser._id);
     }
   }, [selectedUser?._id, getMessagesByUserId]);
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
-  // --- Rendering ---
   return (
     <>
       <ChatHeader />

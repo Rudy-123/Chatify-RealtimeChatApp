@@ -1,16 +1,12 @@
 import { useEffect } from "react"; // ← YE ADD KARO
 import { useChatStore } from "../store/useChatStore";
 import UsersLoadingSkeleton from "./UsersLoadingSkeleton";
+import { useAuthStore } from "../store/useAuthStore";
 
 function ContactList() {
-  const {
-    getAllContacts,
-    allContacts,
-    setSelectedUser,
-    isUsersLoading,
-    onlineUsers,
-  } = useChatStore();
-
+  const { getAllContacts, allContacts, setSelectedUser, isUsersLoading } =
+    useChatStore();
+  const { onlineUsers } = useAuthStore();
   useEffect(() => {
     getAllContacts();
   }, [getAllContacts]);
@@ -27,7 +23,7 @@ function ContactList() {
         >
           <div className="flex items-center gap-3">
             <div
-              className={`avatar ${onlineUsers?.includes(contact._id) ? "online" : ""}`}
+              className={`avatar ${onlineUsers?.includes(contact._id.toString()) ? "online" : "offline"}`}
             >
               <div className="size-12 rounded-full overflow-hidden bg-slate-700">
                 <img

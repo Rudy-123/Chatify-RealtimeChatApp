@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -9,7 +10,6 @@ const userSchema = new mongoose.Schema(
     fullname: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -21,8 +21,9 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
   },
-  { timestamps: true }, //created at and update at
+  { timestamps: true }, // createdAt & updatedAt
 );
 
 const User = mongoose.model("User", userSchema);
+
 export default User;
