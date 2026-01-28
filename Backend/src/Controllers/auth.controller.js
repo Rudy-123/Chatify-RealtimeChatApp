@@ -36,24 +36,23 @@ export const signup = async (req, res) => {
       const savedUser = await newUser.save();
       generateToken(savedUser._id, res);
 
-      res.status(201).json({
+      // Send welcome email in background (don't await to prevent blocking response)
+      sendWelcomeEmail(
+        savedUser.email,
+        savedUser.fullname,
+        ENV.CLIENT_URL,
+      ).catch((error) => {
+        console.log("Failed to send welcome email:", error.message);
+      });
+
+      return res.status(201).json({
         _id: newUser._id,
         fullname: newUser.fullname,
         email: newUser.email,
         profilePic: newUser.profilePic,
       });
-
-      try {
-        await sendWelcomeEmail(
-          savedUser.email,
-          savedUser.fullname,
-          ENV.CLIENT_URL,
-        );
-      } catch (error) {
-        console.log("Failed to send welcome email");
-      }
     } else {
-      res.status(400).json({ message: "Invalid User Data" });
+      return res.status(400).json({ message: "Invalid User Data" });
     }
   } catch (error) {
     console.log("Error in signup controller: ", error);
