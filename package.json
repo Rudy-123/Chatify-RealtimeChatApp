@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "npm install --prefix Backend && npm install --prefix Frontend && npm run build --prefix Frontend",
-    "start": "node Backend/src/server.js"
+    "start": "npm run start --prefix backend"
   },
   "repository": {
     "type": "git",
