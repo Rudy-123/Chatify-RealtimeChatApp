@@ -4,11 +4,15 @@ import messageRoutes from "./Routes/message.route.js";
 import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
 import path from "path";
+import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./lib/socket.js";
 
-const __dirname = path.resolve();
+// ES module fix for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const PORT = ENV.PORT || 3000;
 
 app.use(express.json({ limit: "50mb" }));
@@ -25,13 +29,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 if (ENV.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+  // __dirname is Backend/src, so go up twice to root, then into Frontend/dist
+  app.use(express.static(path.join(__dirname, "../../Frontend/dist")));
 
-  //Any route other then mentioned and declared under the routes folder wouold be directed towards the frontend
+  //Any route other than API routes will be directed to the frontend
   app.get("*", (_, res) => {
-    res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "../../Frontend/dist/index.html"));
   });
 }
+
 server.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
   connectDB();
