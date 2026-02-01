@@ -1,4 +1,5 @@
 import { useAuthStore } from "../store/useAuthStore";
+import { ChevronDown, Trash } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useEffect, useRef } from "react";
 import ChatHeader from "../Components/ChatHeader";
@@ -14,6 +15,7 @@ function ChatContainer() {
     isMessagesLoading,
     subscribeToMessages,
     unsubscribeFromMessages,
+    deleteMessage,
   } = useChatStore();
   const { authUser } = useAuthStore();
 
@@ -53,12 +55,39 @@ function ChatContainer() {
                 }`}
               >
                 <div
-                  className={`chat-bubble relative ${
+                  className={`chat-bubble relative group ${
                     msg.senderId === authUser._id
                       ? "bg-cyan-600 text-white"
                       : "bg-slate-800 text-slate-200"
                   }`}
                 >
+                  {msg.senderId === authUser._id && (
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="dropdown dropdown-end">
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className="btn btn-ghost btn-xs btn-circle bg-black/20 hover:bg-black/40 border-none text-white"
+                        >
+                          <ChevronDown size={14} />
+                        </div>
+                        <ul
+                          tabIndex={0}
+                          className="dropdown-content z-[1] menu p-2 shadow bg-slate-800 rounded-box w-24 border border-slate-700"
+                        >
+                          <li>
+                            <button
+                              onClick={() => deleteMessage(msg._id)}
+                              className="text-red-500 hover:text-red-400 hover:bg-slate-700/50 flex items-center gap-2 p-2"
+                            >
+                              <Trash size={14} />
+                              <span className="text-xs">Delete</span>
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                   {/* Image Message */}
                   {msg.image && (
                     <img
@@ -69,7 +98,7 @@ function ChatContainer() {
                   )}
 
                   {/* Text Message */}
-                  {msg.text && <p className="mt-2">{msg.text}</p>}
+                  {msg.text && <p className="mt-2 text-wrap break-words">{msg.text}</p>}
 
                   {/* Timestamp */}
                   <p className="text-xs mt-1 opacity-75 flex items-center gap-1">
