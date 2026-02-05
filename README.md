@@ -1,7 +1,7 @@
 
 # ⚡ Chatify  
 ### Real-Time Full-Stack Chat Application
-
+[Chatify Poster](https://github.com/Rudy-123/Chatify-RealtimeChatApp/blob/main/Chatify_poster.png?raw=true)
 ---
 
 ## 📖 Project Overview
