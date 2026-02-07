@@ -223,13 +223,3 @@ Chatify was built to explore **real-time communication**, **WebSocket-based syst
 
 ```
 
----
-
-If you want next:
-- 🎨 **Custom banner image**
-- 🏷️ **GitHub badges**
-- 🧠 **Resume-grade README**
-- 🔥 **Architecture adjusted exactly to your code**
-
-Just say the word 🚀
-```
