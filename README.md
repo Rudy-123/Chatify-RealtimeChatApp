@@ -221,5 +221,4 @@ This project is licensed under the **MIT License**.
 
 Chatify was built to explore **real-time communication**, **WebSocket-based systems**, and **full-stack development** using modern web technologies.
 
-```
 
